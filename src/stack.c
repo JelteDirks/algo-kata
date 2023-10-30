@@ -1,10 +1,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-struct Stack {
-  int datum;
-};
+#include "stack.h"
 
 void push(struct Stack *stack, int data) {}
 
