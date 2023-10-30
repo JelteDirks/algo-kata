@@ -1,7 +1,7 @@
+#include "stack.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "stack.h"
 
 void push(struct Stack *stack, int data) {}
 
@@ -16,4 +16,6 @@ int main(int argc, char *argv[]) {
     sprintf(buf, "%s\n", argv[i]);
     fprintf(stdout, "%s", buf);
   }
+
+  free(buf);
 }
