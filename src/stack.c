@@ -4,7 +4,7 @@
 struct Stack *make_stack(void) {
   struct Stack *s = malloc(sizeof(struct Stack));
   s->size = 0;
-  s->capacity = 20;
+  s->capacity = 0;
   s->internal = malloc(s->capacity * sizeof(int));
   return s;
 }
@@ -14,18 +14,18 @@ void push(struct Stack *stack, int data) {
   int cap = stack->capacity;
 
   if (size + 1 > cap) {
-    int new_cap = cap * 2 * sizeof(int);
-    stack->internal = realloc(stack->internal, new_cap);
+    long new_cap = 1 + cap * 2;
+    stack->internal = realloc(stack->internal, new_cap * sizeof(int));
     stack->capacity = new_cap;
   }
 
   stack->size += 1;
-  stack->internal[stack->size] = data;
+  stack->internal[stack->size - 1] = data;
 }
 
 int pop(struct Stack *stack) {
   if (stack->size > 0) {
-    int data = stack->internal[stack->size];
+    int data = stack->internal[stack->size - 1];
     stack->size -= 1;
     return data;
   }
@@ -33,10 +33,10 @@ int pop(struct Stack *stack) {
 }
 
 int peek(struct Stack *stack) {
-  if (stack->size == 0) {
+  if (stack->size <= 0) {
     return (int)NULL;
   }
-  return stack->internal[stack->size];
+  return stack->internal[stack->size - 1];
 }
 
 void free_stack(struct Stack *stack) {
