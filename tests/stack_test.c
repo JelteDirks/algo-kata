@@ -10,8 +10,12 @@ START_TEST(test_stack) {
   push(s, 11);
   ck_assert_int_eq(peek(s), 11);
 
+  ck_assert_int_eq(s->size, 2);
+
   ck_assert_int_eq(pop(s), 11);
   ck_assert_int_eq(pop(s), 10);
+
+  ck_assert_int_eq(s->size, 0);
 
   push(s, 3);
   ck_assert_int_eq(peek(s), 3);
@@ -20,6 +24,8 @@ START_TEST(test_stack) {
   push(s, 5);
   push(s, 6);
   push(s, 7);
+
+  ck_assert_int_eq(s->size, 5);
 
   ck_assert_int_eq(pop(s), 7);
   ck_assert_int_eq(pop(s), 6);
@@ -30,8 +36,24 @@ START_TEST(test_stack) {
   pop(s);
   pop(s);
 
+  ck_assert_int_eq(s->size, 0);
+
   push(s, 1);
   ck_assert_int_eq(peek(s), 1);
+
+  ck_assert_int_eq(s->size, 1);
+
+  for (int i = 0; i < 1000; i++) {
+    push(s, i);
+  }
+
+  ck_assert_int_eq(s->size, 1001);
+
+  for (int i = 0; i < 1000; i++) {
+    pop(s);
+  }
+
+  ck_assert_int_eq(s->size, 1);
 
   free_stack(s);
 }
