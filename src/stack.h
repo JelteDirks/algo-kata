@@ -1,5 +1,8 @@
 struct Stack {
   int size;
+
+  int capacity;
+  int *internal;
 };
 
 struct Stack *make_stack(void);
