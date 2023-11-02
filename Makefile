@@ -34,3 +34,4 @@ queue: $(OBJ_DIR)/queue.o $(TEST_DIR)/queue_test.c
 
 clean:
 	rm -rf $(OBJ_DIR) $(TEST_EXECS) tests/*.dSYM
+	rm ${TEST_DIR}/*_test
