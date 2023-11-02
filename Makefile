@@ -16,17 +16,9 @@ TEST_DIR = tests
 # Object files directory
 OBJ_DIR = obj
 
-# Source and object files
-SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
-OBJ_FILES = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
+.PHONY: all test clean stack queue
 
-# Test files and executables
-TEST_FILES = $(wildcard $(TEST_DIR)/*_test.c)
-TEST_EXECS = $(patsubst %.c,%,$(TEST_FILES))
-
-.PHONY: all test clean
-
-all: $(OBJ_FILES)
+all: stack queue
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -34,10 +26,11 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 $(OBJ_DIR):
 	mkdir -p $@
 
-test: $(TEST_EXECS)
+stack: $(OBJ_DIR)/stack.o $(TEST_DIR)/stack_test.c
+	$(CC) $(CFLAGS) $(TEST_DIR)/stack_test.c $(OBJ_DIR)/stack.o -o $(TEST_DIR)/stack_test $(LDFLAGS) -lcheck
 
-$(TEST_EXECS): % : %.c $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(wildcard $(SRC_DIR)/*.c))
-	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS) -lcheck
+queue: $(OBJ_DIR)/queue.o $(TEST_DIR)/queue_test.c
+	$(CC) $(CFLAGS) $(TEST_DIR)/queue_test.c $(OBJ_DIR)/queue.o -o $(TEST_DIR)/queue_test $(LDFLAGS) -lcheck
 
 clean:
 	rm -rf $(OBJ_DIR) $(TEST_EXECS) tests/*.dSYM
