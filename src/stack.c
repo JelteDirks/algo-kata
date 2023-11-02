@@ -23,20 +23,22 @@ void push(struct Stack *stack, int data) {
   stack->internal[stack->size - 1] = data;
 }
 
-int pop(struct Stack *stack) {
+int pop(struct Stack *stack, int *value) {
   if (stack->size > 0) {
     int data = stack->internal[stack->size - 1];
+    *value = data;
     stack->size -= 1;
-    return data;
+    return 0;
   }
-  return (int)NULL;
+  return 1;
 }
 
-int peek(struct Stack *stack) {
-  if (stack->size <= 0) {
-    return (int)NULL;
+int peek(struct Stack *stack, int *value) {
+  if (stack->size > 0) {
+    *value = stack->internal[stack->size - 1];
+    return 0;
   }
-  return stack->internal[stack->size - 1];
+  return 1;
 }
 
 void free_stack(struct Stack *stack) {

@@ -4,21 +4,35 @@
 // Test case
 START_TEST(test_stack) {
   struct Stack *s = make_stack();
+  int data = -1;
+  int result;
 
   push(s, 10);
-  ck_assert_int_eq(peek(s), 10);
+  result = peek(s, &data);
+  ck_assert_int_eq(data, 10);
+  ck_assert_int_eq(result, 0);
+
   push(s, 11);
-  ck_assert_int_eq(peek(s), 11);
+  result = peek(s, &data);
+  ck_assert_int_eq(data, 11);
+  ck_assert_int_eq(result, 0);
 
   ck_assert_int_eq(s->size, 2);
 
-  ck_assert_int_eq(pop(s), 11);
-  ck_assert_int_eq(pop(s), 10);
+  result = pop(s, &data);
+  ck_assert_int_eq(data, 11);
+  ck_assert_int_eq(result, 0);
+
+  result = pop(s, &data);
+  ck_assert_int_eq(data, 10);
+  ck_assert_int_eq(result, 0);
 
   ck_assert_int_eq(s->size, 0);
 
   push(s, 3);
-  ck_assert_int_eq(peek(s), 3);
+  result = peek(s, &data);
+  ck_assert_int_eq(data, 3);
+  ck_assert_int_eq(result, 0);
 
   push(s, 4);
   push(s, 5);
@@ -27,19 +41,40 @@ START_TEST(test_stack) {
 
   ck_assert_int_eq(s->size, 5);
 
-  ck_assert_int_eq(pop(s), 7);
-  ck_assert_int_eq(pop(s), 6);
-  ck_assert_int_eq(pop(s), 5);
-  ck_assert_int_eq(pop(s), 4);
-  ck_assert_int_eq(pop(s), 3);
+  result = pop(s, &data);
+  ck_assert_int_eq(data, 7);
+  ck_assert_int_eq(result, 0);
 
-  pop(s);
-  pop(s);
+  result = pop(s, &data);
+  ck_assert_int_eq(data, 6);
+  ck_assert_int_eq(result, 0);
+
+  result = pop(s, &data);
+  ck_assert_int_eq(data, 5);
+  ck_assert_int_eq(result, 0);
+
+  result = pop(s, &data);
+  ck_assert_int_eq(data, 4);
+  ck_assert_int_eq(result, 0);
+
+  result = pop(s, &data);
+  ck_assert_int_eq(data, 3);
+  ck_assert_int_eq(result, 0);
+
+  ck_assert_int_eq(s->size, 0);
+
+  result = pop(s, &data);
+  ck_assert_int_eq(result, 1);
+
+  result = pop(s, &data);
+  ck_assert_int_eq(result, 1);
 
   ck_assert_int_eq(s->size, 0);
 
   push(s, 1);
-  ck_assert_int_eq(peek(s), 1);
+  result = peek(s, &data);
+  ck_assert_int_eq(data, 1);
+  ck_assert_int_eq(result, 0);
 
   ck_assert_int_eq(s->size, 1);
 
@@ -49,8 +84,10 @@ START_TEST(test_stack) {
 
   ck_assert_int_eq(s->size, 1001);
 
-  for (int i = 0; i < 1000; i++) {
-    pop(s);
+  for (int i = 999; i >= 0; i--) {
+    result = pop(s, &data);
+    ck_assert_int_eq(data, i);
+    ck_assert_int_eq(result, 0);
   }
 
   ck_assert_int_eq(s->size, 1);
