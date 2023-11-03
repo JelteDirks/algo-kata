@@ -1,15 +1,32 @@
 #include "../src/queue.h"
 #include <check.h>
+#include <stdio.h>
 
 // Test case
 START_TEST(test_queue) {
-  struct Queue *q = make_queue();
+  struct Queue *q = make_queue(1);
   int data = -1;
   int result = -1;
+
+  enqueue(q, 33);
+
+  result = dequeue(q, &data);
+  ck_assert_int_eq(data, 33);
+  ck_assert_int_eq(result, 0);
+
+  enqueue(q, 99);
+
+  result = dequeue(q, &data);
+  ck_assert_int_eq(data, 99);
+  ck_assert_int_eq(result, 0);
+
+  ck_assert_int_eq(q->capacity, 1);
 
   enqueue(q, 2);
   enqueue(q, 3);
   enqueue(q, 4);
+
+  ck_assert_int_eq(q->capacity, 3);
 
   result = dequeue(q, &data);
   ck_assert_int_eq(data, 2);
