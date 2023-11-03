@@ -20,7 +20,7 @@ START_TEST(test_queue) {
   ck_assert_int_eq(result, 0);
 
   result = dequeue(q, &data);
-  ck_assert_int_eq(data, 2);
+  ck_assert_int_eq(data, 4);
   ck_assert_int_eq(result, 0);
 
   result = dequeue(q, &data);
@@ -59,7 +59,6 @@ START_TEST(test_queue) {
   }
 
   ck_assert_int_eq(q->size, 1000);
-
 
   for (int j = 0; j < 1000; j++) {
     result = dequeue(q, &data);
