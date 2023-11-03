@@ -18,13 +18,16 @@ OBJ_DIR = obj
 
 .PHONY: all test clean stack queue
 
-all: stack queue
+all: stack queue linkedlist
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR):
 	mkdir -p $@
+
+linkedlist: $(OBJ_DIR)/linkedlist.o $(TEST_DIR)/linkedlist_test.c
+	$(CC) $(CFLAGS) $(TEST_DIR)/linkedlist_test.c $(OBJ_DIR)/linkedlist.o -o $(TEST_DIR)/linkedlist_test $(LDFLAGS) -lcheck
 
 stack: $(OBJ_DIR)/stack.o $(TEST_DIR)/stack_test.c
 	$(CC) $(CFLAGS) $(TEST_DIR)/stack_test.c $(OBJ_DIR)/stack.o -o $(TEST_DIR)/stack_test $(LDFLAGS) -lcheck
