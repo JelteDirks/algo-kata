@@ -1,9 +1,30 @@
-#include "../src/queue.h"
+#include "../src/linkedlist.h"
 #include <check.h>
 #include <stdio.h>
 
 // Test case
-START_TEST(test_linkedlist) {}
+START_TEST(test_linkedlist) {
+  struct LinkedList *list = make_list();
+
+  ck_assert_ptr_nonnull(list);
+  ck_assert_ptr_null(list->head);
+
+  prepend(list, 2);
+  ck_assert_int_eq(list->size, 1);
+  prepend(list, 3);
+  ck_assert_int_eq(list->size, 2);
+
+  ck_assert_str_eq(to_str(list), "3->2->NULL");
+
+  append(list, 14);
+  ck_assert_int_eq(list->size, 3);
+  append(list, 15);
+  ck_assert_int_eq(list->size, 4);
+
+  ck_assert_str_eq(to_str(list), "3->2->14->15->NULL");
+
+  free_list(list);
+}
 END_TEST
 
 // Test suite
@@ -11,7 +32,7 @@ Suite *add_suite(void) {
   Suite *s;
   TCase *tc_core;
 
-  s = suite_create("Queue");
+  s = suite_create("LinkedList");
 
   /* Core test case */
   tc_core = tcase_create("Core");
