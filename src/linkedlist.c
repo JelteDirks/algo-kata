@@ -9,6 +9,31 @@ struct LinkedList *make_list() {
   return ll;
 }
 
+int head(struct LinkedList *ll, int *data) {
+  struct ListNode *head = ll->head;
+  if (head == NULL) {
+    return 1;
+  }
+  *data = head->data;
+  return 0;
+}
+
+int tail(struct LinkedList *ll, int *data) {
+  struct ListNode *cur = ll->head;
+
+  if (cur == NULL) {
+    return 1;
+  }
+
+  while (cur->next != NULL) {
+    cur = cur->next;
+  }
+
+  *data = cur->data;
+
+  return 0;
+}
+
 int prepend(struct LinkedList *ll, int data) {
   struct ListNode *ln = malloc(sizeof(struct ListNode));
   ln->data = data;
