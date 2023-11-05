@@ -5,6 +5,8 @@
 // Test case
 START_TEST(test_linkedlist) {
   struct LinkedList *list = make_list();
+  int data;
+  int result;
 
   ck_assert_ptr_nonnull(list);
   ck_assert_ptr_null(list->head);
@@ -22,6 +24,25 @@ START_TEST(test_linkedlist) {
   ck_assert_int_eq(list->size, 4);
 
   ck_assert_str_eq(to_str(list), "3->2->14->15->NULL");
+
+  result = head(list, &data);
+  ck_assert_int_eq(result, 0);
+  ck_assert_int_eq(data, 3);
+
+  result = tail(list, &data);
+  ck_assert_int_eq(result, 0);
+  ck_assert_int_eq(data, 15);
+
+  prepend(list, 23);
+  append(list, 55);
+
+  result = head(list, &data);
+  ck_assert_int_eq(result, 0);
+  ck_assert_int_eq(data, 23);
+
+  result = tail(list, &data);
+  ck_assert_int_eq(result, 0);
+  ck_assert_int_eq(data, 55);
 
   free_list(list);
 }
