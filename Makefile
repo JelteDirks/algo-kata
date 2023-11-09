@@ -29,6 +29,9 @@ $(OBJ_DIR):
 linkedlist: $(OBJ_DIR)/linkedlist.o $(TEST_DIR)/linkedlist_test.c
 	$(CC) $(CFLAGS) $(TEST_DIR)/linkedlist_test.c $(OBJ_DIR)/linkedlist.o -o $(TEST_DIR)/linkedlist_test $(LDFLAGS) -lcheck
 
+minheap: $(OBJ_DIR)/minheap.o $(TEST_DIR)/minheap_test.c
+	$(CC) $(CFLAGS) $(TEST_DIR)/minheap_test.c $(OBJ_DIR)/minheap.o -o $(TEST_DIR)/minheap_test $(LDFLAGS) -lcheck
+
 stack: $(OBJ_DIR)/stack.o $(TEST_DIR)/stack_test.c
 	$(CC) $(CFLAGS) $(TEST_DIR)/stack_test.c $(OBJ_DIR)/stack.o -o $(TEST_DIR)/stack_test $(LDFLAGS) -lcheck
 
