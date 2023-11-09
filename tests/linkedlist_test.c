@@ -16,6 +16,7 @@ START_TEST(test_linkedlist) {
   prepend(list, 3);
   ck_assert_int_eq(list->size, 2);
 
+  ck_assert_int_eq(list->size, 2);
   ck_assert_str_eq(to_str(list), "3->2->NULL");
 
   append(list, 14);
@@ -23,6 +24,7 @@ START_TEST(test_linkedlist) {
   append(list, 15);
   ck_assert_int_eq(list->size, 4);
 
+  ck_assert_int_eq(list->size, 4);
   ck_assert_str_eq(to_str(list), "3->2->14->15->NULL");
 
   result = head(list, &data);
@@ -36,6 +38,8 @@ START_TEST(test_linkedlist) {
   prepend(list, 23);
   append(list, 55);
 
+  ck_assert_int_eq(list->size, 6);
+
   result = head(list, &data);
   ck_assert_int_eq(result, 0);
   ck_assert_int_eq(data, 23);
@@ -43,6 +47,31 @@ START_TEST(test_linkedlist) {
   result = tail(list, &data);
   ck_assert_int_eq(result, 0);
   ck_assert_int_eq(data, 55);
+
+  remove_position(list, 1);
+  ck_assert_str_eq(to_str(list), "23->2->14->15->55->NULL");
+
+  remove_position(list, 0);
+  ck_assert_str_eq(to_str(list), "2->14->15->55->NULL");
+
+  append(list, 31);
+  append(list, 32);
+  append(list, 33);
+  append(list, 34);
+
+  ck_assert_int_eq(list->size, 8);
+
+  ck_assert_str_eq(to_str(list), "2->14->15->55->31->32->33->34->NULL");
+
+  result = remove_position(list, 7);
+  ck_assert_int_eq(result, 0);
+
+  ck_assert_int_eq(list->size, 7);
+
+  result = remove_position(list, 7);
+  ck_assert_int_eq(result, 1);
+
+  ck_assert_int_eq(list->size, 7);
 
   free_list(list);
 }
