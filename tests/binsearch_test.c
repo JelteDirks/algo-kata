@@ -22,6 +22,9 @@ void setup() {
   size = pow(10, 8);
   data_array = malloc(size * sizeof(int));
 
+  fprintf(stderr, "size of array %d\n", size);
+  fprintf(stderr, "max random value: %d\n", RAND_MAX);
+
   for (int i = 0; i < size; i++) {
     int randy = random();
     data_array[i] = (randy * 23 + 11) % size;
@@ -32,16 +35,30 @@ void setup() {
     data_array[index] = values[j];
   }
 
+  fprintf(stderr, "array seeded, sorting now...\n");
+
   qsort(data_array, size, sizeof(int), comp);
+
+  fprintf(stderr, "finished setup\n");
 }
 
 void teardown() { free(data_array); }
 
 // Test case
 START_TEST(test_binsearch) {
+  int result;
+
   for (int i = 0; i < (sizeof(values) / sizeof(int)); i++) {
-    ck_assert_int_eq(bin_search(data_array, values[i]), 1);
+    result = iterative_bin_search(data_array, size, values[i]);
+    ck_assert_int_eq(result, 1);
+    result = recursive_bin_search(data_array, 0, size - 1, values[i]);
+    ck_assert_int_eq(result, 1);
   }
+
+  result = iterative_bin_search(data_array, size, size + 1);
+  ck_assert_int_eq(result, 0);
+  result = recursive_bin_search(data_array, 0, size - 1, size + 1);
+  ck_assert_int_eq(result, 0);
 }
 END_TEST
 
