@@ -9,6 +9,43 @@ struct LinkedList *make_list() {
   return ll;
 }
 
+int remove_position(struct LinkedList *ll, int position) {
+  int cur_pos = 0;
+  struct ListNode *cur = ll->head;
+  struct ListNode *prev = ll->head;
+  struct ListNode *new_node;
+
+  if (position >= ll->size) {
+    return 1;
+  }
+
+  if (position == 0) {
+    new_node = ll->head->next;
+    free(ll->head);
+    ll->head = new_node;
+
+    ll->size -= 1;
+    return 0;
+  }
+
+  while (cur_pos < position && cur != NULL) {
+    prev = cur;
+    cur = cur->next;
+    cur_pos += 1;
+  }
+
+  if (cur_pos != position) {
+    return 1;
+  }
+
+  new_node = prev->next->next;
+  free(prev->next);
+  prev->next = new_node;
+
+  ll->size -= 1;
+  return 0;
+}
+
 int head(struct LinkedList *ll, int *data) {
   struct ListNode *head = ll->head;
   if (head == NULL) {
@@ -84,4 +121,15 @@ char *to_str(struct LinkedList *ll) {
   return str;
 }
 
-void free_list(struct LinkedList *ll) { free(ll); }
+void free_list(struct LinkedList *ll) {
+  struct ListNode *cur = ll->head;
+  struct ListNode *prev = NULL;
+
+  while (cur != NULL) {
+    prev = cur;
+    cur = cur->next;
+    free(prev);
+  }
+
+  free(ll);
+}
