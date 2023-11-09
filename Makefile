@@ -1,11 +1,13 @@
 # Compiler
 CC = gcc
 
+CHECK_INSTALL_DIR = /opt/homebrew/Cellar/check/0.15.2
+
 # Compiler flags
-CFLAGS = -I /opt/homebrew/Cellar/check/0.15.2/include -g -Wall
+CFLAGS = -I ${CHECK_INSTALL_DIR}/include -g -Wall
 
 # Library paths
-LDFLAGS = -L /opt/homebrew/Cellar/check/0.15.2/lib
+LDFLAGS = -L ${CHECK_INSTALL_DIR}/lib
 
 # Source files directory
 SRC_DIR = src
@@ -18,7 +20,7 @@ OBJ_DIR = obj
 
 .PHONY: all test clean stack queue
 
-all: stack queue linkedlist
+all: stack queue linkedlist binsearch minheap
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
