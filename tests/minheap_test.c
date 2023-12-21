@@ -4,9 +4,15 @@
 
 // Test case
 START_TEST(test_minheap) {
-  struct MinHeap *q = make_minheap();
+  struct MinHeap *h = make_minheap(10);
 
-  free_minheap(q);
+  insert(h, 2);
+  insert(h, 3);
+  insert(h, 4);
+
+  fprintf(stdout, "%d\n", get_min(h));
+
+  free_minheap(h);
 }
 END_TEST
 
