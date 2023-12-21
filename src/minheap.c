@@ -36,21 +36,14 @@ void heap_up(struct MinHeap *heap, int index) {
     int pv = heap->internal[par];
     int cv = heap->internal[cur];
 
-    cur = par;
-    par = parent(heap, cur);
-
-    if (pv < cv) {
+    if (pv > cv) {
       swap(heap, par, cur);
     } else {
       break;
     }
-  }
 
-  int pv = heap->internal[par];
-  int cv = heap->internal[cur];
-
-  if (pv < cv) {
-    swap(heap, par, cur);
+    cur = par;
+    par = parent(heap, cur);
   }
 }
 
@@ -62,24 +55,27 @@ void heap_down(struct MinHeap *heap, int index) {
   while (left < heap->size) {
     int lv = heap->internal[left];
     int cv = heap->internal[cur];
+    int smallest = cur;
 
     if (lv < cv) {
-      swap(heap, left, cur);
-      cur = left_child(heap, cur);
-      continue;
+      smallest = left;
     }
 
     if (right < heap->size) {
       int rv = heap->internal[right];
-
-      if (rv < cv) {
-        swap(heap, right, cur);
-        cur = right_child(heap, cur);
-        continue;
+      if (rv < cv && rv < lv) {
+        smallest = right;
       }
     }
 
-    break;
+    if (smallest == cur) {
+      break;
+    }
+
+    swap(heap, smallest, cur);
+    cur = smallest;
+    left = left_child(heap, cur);
+    right = right_child(heap, cur);
   }
 }
 
