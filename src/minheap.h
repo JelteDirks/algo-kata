@@ -9,7 +9,7 @@ struct MinHeap {
 struct MinHeap *make_minheap(int size);
 void free_minheap(struct MinHeap *heap);
 void insert(struct MinHeap *heap, int value);
-int get_min(struct MinHeap *heap);
+int extract_min(struct MinHeap *heap);
 int parent(struct MinHeap *heap, int index);
 int left_child(struct MinHeap *heap, int index);
 int right_child(struct MinHeap *heap, int index);

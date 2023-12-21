@@ -17,11 +17,11 @@ void insert(struct MinHeap *heap, int value) {
   }
 
   heap->internal[heap->size] = value;
-  heap_up(heap, heap->size);
   heap->size += 1;
+  heap_up(heap, heap->size - 1);
 }
 
-int get_min(struct MinHeap *heap) {
+int extract_min(struct MinHeap *heap) {
   swap(heap, 0, heap->size - 1);
   heap->size -= 1;
   heap_down(heap, 0);
@@ -32,13 +32,15 @@ void heap_up(struct MinHeap *heap, int index) {
   int cur = index;
   int par = parent(heap, index);
 
-  while (par) {
+  while (cur != par) {
     int pv = heap->internal[par];
     int cv = heap->internal[cur];
+
+    cur = par;
+    par = parent(heap, cur);
+
     if (pv < cv) {
-      swap(heap, pv, cv);
-      cur = par;
-      par = parent(heap, cur);
+      swap(heap, par, cur);
     } else {
       break;
     }
@@ -48,28 +50,30 @@ void heap_up(struct MinHeap *heap, int index) {
   int cv = heap->internal[cur];
 
   if (pv < cv) {
-    swap(heap, pv, cv);
+    swap(heap, par, cur);
   }
 }
 
 void heap_down(struct MinHeap *heap, int index) {
   int cur = index;
+  int left = left_child(heap, cur);
+  int right = right_child(heap, cur);
 
-  while (left_child(heap, cur) < heap->size) {
-    int lv = heap->internal[left_child(heap, cur)];
+  while (left < heap->size) {
+    int lv = heap->internal[left];
     int cv = heap->internal[cur];
 
     if (lv < cv) {
-      swap(heap, lv, cv);
+      swap(heap, left, cur);
       cur = left_child(heap, cur);
       continue;
     }
 
-    if (right_child(heap, cur) < heap->size) {
-      int rv = heap->internal[right_child(heap, cur)];
+    if (right < heap->size) {
+      int rv = heap->internal[right];
 
       if (rv < cv) {
-        swap(heap, rv, cv);
+        swap(heap, right, cur);
         cur = right_child(heap, cur);
         continue;
       }

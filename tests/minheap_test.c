@@ -9,8 +9,12 @@ START_TEST(test_minheap) {
   insert(h, 2);
   insert(h, 3);
   insert(h, 4);
+  insert(h, 5);
+  insert(h, 6);
 
-  fprintf(stdout, "%d\n", get_min(h));
+  ck_assert_int_eq(extract_min(h), 2);
+  ck_assert_int_eq(extract_min(h), 3);
+  ck_assert_int_eq(extract_min(h), 4);
 
   free_minheap(h);
 }
